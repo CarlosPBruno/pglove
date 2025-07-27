@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #f8f8f8;
+            --accent: #d4af37;
+            --text-primary: #2c2c2c;
+            --text-secondary: #666;
+            --text-light: #999;
+            --border: #e5e5e5;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --shadow-strong: rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fafafa;
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Page Management */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Login Page */
+        .login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .login-container {
+            background: white;
+            padding: 60px 50px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px var(--shadow);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .login-container h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .login-container p {
+            margin-bottom: 40px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .input-group {
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-light);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.01em;
+        }
+
+        .btn:hover {
+            background: #333;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px var(--shadow-strong);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.accent {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn.accent:hover {
+            background: #c19b26;
+        }
+
+        /* Letter Page */
+        .letter-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: white;
+        }
+
+        .letter-container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .letter-envelope {
+            background: white;
+            padding: 80px 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .letter-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 16px;
+            margin: 0 auto 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+        }
+
+        .letter-content {
+            display: none;
+        }
+
+        .letter-content.active {
+            display: block;
+        }
+
+        .letter-line {
+            font-size: 20px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+            font-weight: 400;
+        }
+
+        .letter-intro h2 {
+            color: var(--text-primary);
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .letter-intro p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            color: var(--text-secondary);
+        }
+
+        /* Video Page */
+        .video-page {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .video-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        .video-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 60px;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .video-placeholder .play-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-placeholder .play-icon:hover {
+            transform: scale(1.1);
+            background: #c19b26;
+        }
+
+        .video-placeholder .play-icon::after {
+            content: '▶';
+            color: white;
+            font-size: 28px;
+            margin-left: 4px;
+        }
+
+        /* Gallery Page */
+        .gallery-page {
+            padding: 80px 0;
+            background: #f8f8f8;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--text-primary);
+            margin-bottom: 60px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        .carousel-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .carousel-slide {
+            display: none;
+            text-align: center;
+        }
+
+        .carousel-slide.active {
+            display: block;
+        }
+
+        .slide-image {
+            width: 280px;
+            height: 280px;
+            background: var(--accent);
+            border-radius: 20px;
+            margin: 0 auto 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            font-weight: 300;
+        }
+
+        .slide-caption {
+            font-size: 18px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .carousel-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .slide-counter {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* Timeline Page */
+        .timeline-page {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .timeline-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--text-primary);
+            margin-bottom: 60px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            margin-bottom: 80px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            animation: slideInTimeline 0.8s ease forwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 40px;
+            animation-delay: 0.1s;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 40px;
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .timeline-content {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -26px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -26px;
+        }
+
+        .timeline-date {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-text {
+            line-height: 1.6;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Message Page */
+        .message-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f8f8f8;
+        }
+
+        .message-container {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px var(--shadow);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid var(--border);
+        }
+
+        .message-container h2 {
+            text-align: center;
+            font-size: 32px;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        .message-container .subtitle {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .message-container textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+            line-height: 1.5;
+        }
+
+        .message-container textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .message-container textarea::placeholder {
+            color: var(--text-light);
+        }
+
+        /* Navigation */
+        .page-nav {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 1000;
+            display: flex;
+            gap: 12px;
+        }
+
+        .page-nav button {
+            box-shadow: 0 8px 25px var(--shadow-strong);
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInTimeline {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+            
+            .login-container, .letter-envelope, .carousel-container, .message-container {
+                padding: 40px 32px;
+                margin: 0 16px;
+            }
+            
+            .login-container h1, .gallery-title, .timeline-title, .message-container h2, .letter-intro h2, .video-title {
+                font-size: 28px;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: 100% !important;
+                left: 0 !important;
+                padding-left: 60px !important;
+                padding-right: 16px !important;
+            }
+            
+            .timeline-item .timeline-content::before {
+                left: -26px !important;
+            }
+            
+            .slide-image {
+                width: 220px;
+                height: 220px;
+                font-size: 36px;
+            }
+
+            .letter-icon {
+                width: 64px;
+                height: 64px;
+                font-size: 28px;
+            }
+
+            .video-wrapper {
+                height: 300px;
+            }
+
+            .page-nav {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Smooth transitions */
+        * {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Clean scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progressBar"></div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <div class="login-page">
+            <div class="login-container">
+                <h1>Hola Mi Amor</h1>
+                <p>Ingresa la palabra que mejor describe nuestro sentimiento más puro</p>
+                <div class="input-group">
+                    <label for="secretWord">Palabra Secreta</label>
+                    <input type="password" id="secretWord" placeholder="Escribe aquí...">
+                </div>
+                <button class="btn" onclick="checkAccess()">Entrar</button>
+                <p style="margin-top: 24px; color: var(--text-light); font-size: 14px;">Pista: Lo más importante entre nosotros</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Letter Page -->
+    <div id="letterPage" class="page">
+        <div class="letter-page">
+            <div class="letter-container">
+                <div class="letter-envelope">
+                    <div id="letterIcon" class="letter-icon">✉</div>
+                    <div id="letterIntro" class="letter-intro">
+                        <h2>Una Carta Para Ti</h2>
+                        <p>He escrito algo especial que quiero compartir contigo</p>
+                        <button class="btn accent" onclick="startReading()">Leer Carta</button>
+                    </div>
+                    <div id="letterContent" class="letter-content">
+                        <div class="letter-line">Mi amor, desde el primer momento en que te conocí...</div>
+                        <div class="letter-line">Supe que habías llegado para cambiar mi vida de la manera más hermosa.</div>
+                        <div class="letter-line">Cada día contigo es un regalo que atesoro profundamente.</div>
+                        <div class="letter-line">Tu sonrisa ilumina mis días y tu amor es mi mayor fortaleza.</div>
+                        <div class="letter-line">Eres mi compañera perfecta en esta aventura llamada vida.</div>
+                        <div class="letter-line">Esta sorpresa es una pequeña muestra de todo lo que significas para mí.</div>
+                        <div class="letter-line" style="color: var(--accent); font-weight: 500; margin-top: 32px;">Con todo mi amor, para ti.</div>
+                        <button class="btn" onclick="nextPage()" style="margin-top: 40px;">Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Page -->
+    <div id="videoPage" class="page">
+        <div class="container">
+            <h2 class="video-title">Un Mensaje Especial</h2>
+            <p class="video-subtitle">He grabado algo muy especial para ti</p>
+            <div class="video-container">
+                <div class="video-wrapper">
+                                    <div class="video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                    <iframe 
+                        src="https://www.youtube.com/watch?v=8toJtNAVWu8&list=RD8toJtNAVWu8&start_radio=1" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        style="position: absolute; top:0; left:0; width:100%; height:100%; border-radius: 12px;">
+                    </iframe>
+                </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <button class="btn" onclick="nextPage()">Ver Nuestros Momentos →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Page -->
+    <div id="galleryPage" class="page">
+        <div class="container">
+            <h2 class="gallery-title">Nuestros Momentos</h2>
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <div class="slide-image">
+                        <img src="images/foto1.jpg" alt="Nuestras primeras salidas" style="width: 90%; border-radius: 10px;">
+                    </div>
+
+                    <p class="slide-caption">Nuestras primeras salidas, cuando toda esta historia empezaba a florecer.</p>
+                </div>
+                <div class="carousel-slide">
+                    <div class="slide-image">
+                        <img src="images/foto2.jpg" alt="El día que nos conocimos" style="width: 100%; border-radius: 10px;">
+                    </div>
+
+                    <p class="slide-caption">El día que nos fuimos a vivir juntos, cada día me enamoraba más de ti.</p>
+                </div>
+                <div class="carousel-slide">
+                    <div class="slide-image">
+                        <img src="images/foto3.jpg" alt="El día que nos conocimos" style="width: 90%; border-radius: 10px;">
+                    </div>
+
+                    <p class="slide-caption">Ya faltaba poco para el nacimiento de nuestro gran amor..</p>
+                </div>
+                <div class="carousel-slide">
+                    <div class="slide-image">
+                        <img src="images/foto4.jpg" alt="El día que nos conocimos" style="width: 90%; border-radius: 10px;">
+                    </div>
+
+                    <p class="slide-caption">El momento más feliz y que siempre recordaremos.</p>
+                </div>
+                <div class="carousel-nav">
+                    <button class="nav-btn" onclick="prevSlide()">← Anterior</button>
+                    <span class="slide-counter">
+                        <span id="currentSlide">1</span> de <span id="totalSlides">4</span>
+                    </span>
+                    <button class="nav-btn" onclick="nextSlide()">Siguiente →</button>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn" onclick="nextPage()">Ver Nuestra Historia →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Page -->
+    <div id="timelinePage" class="page">
+        <div class="container">
+            <h2 class="timeline-title">Nuestra Historia</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">El Encuentro</div>
+                        <div class="timeline-text">El destino nos unió en el momento perfecto. Desde ese instante supe que algo extraordinario estaba comenzando.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Primera Cita</div>
+                        <div class="timeline-text">Una tarde perfecta que confirmó todos mis sentimientos. Cada conversación, cada sonrisa, construyendo algo hermoso.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Primer "Te Amo"</div>
+                        <div class="timeline-text">Esas palabras que lo cambiaron todo, pronunciadas con el corazón lleno de certeza y amor verdadero.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Nuestro Presente</div>
+                        <div class="timeline-text">Cada día que pasa mi amor por ti crece más. Eres mi presente más hermoso y mi futuro más deseado.</div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <button class="btn" onclick="nextPage()">Dejar un Mensaje →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Page -->
+    <div id="messagePage" class="page">
+        <div class="message-page">
+            <div class="message-container">
+                <h2>Tu Mensaje</h2>
+                <p class="subtitle">¿Qué te ha parecido esta sorpresa? Me encantaría saber qué piensas</p>
+                <textarea id="userMessage" placeholder="Escribe aquí tu mensaje..."></textarea>
+                <div style="text-align: center;">
+                    <button class="btn accent" onclick="sendMessage()">Enviar Mensaje</button>
+                </div>
+                <p style="text-align: center; margin-top: 16px; color: var(--text-light); font-size: 14px;">
+                    Tu mensaje llegará directamente a mi WhatsApp
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="page-nav" id="pageNav" style="display: none;">
+        <button class="btn" onclick="prevPage()" id="prevBtn">← Anterior</button>
+        <button class="btn" onclick="nextPage()" id="nextBtn">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        let currentSlide = 0;
+        let letterLineIndex = 0;
+        const totalSlides = 4;
+        
+        const pages = ['loginPage', 'letterPage', 'videoPage', 'galleryPage', 'timelinePage', 'messagePage'];
+
+        function updateProgress() {
+            const progress = (currentPage / (pages.length - 1)) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function checkAccess() {
+            const secret = document.getElementById('secretWord').value.toLowerCase();
+            if (secret === 'amor' || secret === 'te amo' || secret === 'love') {
+                showPage(1);
+            } else {
+                alert('Intenta de nuevo 💕');
+                document.getElementById('secretWord').value = '';
+            }
+        }
+
+        function showPage(pageIndex) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pages[pageIndex]).classList.add('active');
+            currentPage = pageIndex;
+            updateProgress();
+
+            const nav = document.getElementById('pageNav');
+            if (pageIndex > 0 && pageIndex < pages.length - 1) {
+                nav.style.display = 'flex';
+            } else {
+                nav.style.display = 'none';
+            }
+
+            updateNavButtons();
+        }
+
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.style.display = currentPage > 1 ? 'inline-block' : 'none';
+            nextBtn.style.display = currentPage < pages.length - 1 ? 'inline-block' : 'none';
+        }
+
+        function nextPage() {
+            if (currentPage < pages.length - 1) {
+                showPage(currentPage + 1);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                showPage(currentPage - 1);
+            }
+        }
+
+        function startReading() {
+            document.getElementById('letterIntro').style.display = 'none';
+            document.getElementById('letterContent').classList.add('active');
+            showLetterLines();
+        }
+
+        function showLetterLines() {
+            const lines = document.querySelectorAll('.letter-line');
+            if (letterLineIndex < lines.length) {
+                lines[letterLineIndex].style.animationDelay = '0s';
+                letterLineIndex++;
+                setTimeout(showLetterLines, 2000);
+            }
+        }
+
+        function playVideo() {
+            // Aquí puedes reemplazar con un video real
+            const videoWrapper = document.querySelector('.video-wrapper');
+            videoWrapper.innerHTML = `
+                <video width="100%" height="100%" controls autoplay style="border-radius: 16px;">
+                    <source src="https://www.youtube.com/watch?v=F0l8liH6SIg&list=RDF0l8liH6SIg&start_radio=1" type="video/mp4">
+                    <p>Tu navegador no soporta video HTML5. 
+                       <a href="https://www.w3schools.com/html/mov_bbb.mp4">Descargar video</a>.
+                    </p>
+                </video>
+            `;
+        }
+
+        function nextSlide() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+        }
+
+        function prevSlide() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('userMessage').value;
+            if (message.trim() === '') {
+                alert('Por favor escribe un mensaje 💕');
+                return;
+            }
+
+            // Encode message for WhatsApp
+            const phoneNumber = '968165279'; // Cambia por tu número de WhatsApp
+            const encodedMessage = encodeURIComponent(`💕 Mensaje de amor: ${message}`);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+            
+            // Show confirmation
+            alert('¡Gracias mi amor! Tu mensaje está siendo enviado 💕');
+            document.getElementById('userMessage').value = '';
+        }
+
+        // Allow Enter key in login
+        document.getElementById('secretWord').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAccess();
+            }
+        });
+
+        // Auto-advance carousel every 7 seconds
+        setInterval(() => {
+            if (currentPage === 3) { // Gallery page
+                nextSlide();
+            }
+        }, 7000);
+
+        // Initialize
+        document.getElementById('totalSlides').textContent = totalSlides;
+        updateProgress();
+
+        // Smooth scroll behavior
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Add entrance animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate login container on load
+            setTimeout(() => {
+                const loginContainer = document.querySelector('.login-container');
+                if (loginContainer) {
+                    loginContainer.style.opacity = '0';
+                    loginContainer.style.transform = 'translateY(20px)';
+                    loginContainer.style.transition = 'all 0.8s ease';
+                    
+                    setTimeout(() => {
+                        loginContainer.style.opacity = '1';
+                        loginContainer.style.transform = 'translateY(0)';
+                    }, 100);
+                }
+            }, 100);
+
+            // Add subtle parallax effect to backgrounds
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const backgrounds = document.querySelectorAll('.page');
+                backgrounds.forEach((bg, index) => {
+                    const speed = scrolled * 0.1;
+                    bg.style.transform = `translateY(${speed}px)`;
+                });
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (currentPage > 0) {
+                if (e.key === 'ArrowRight' && currentPage < pages.length - 1) {
+                    nextPage();
+                } else if (e.key === 'ArrowLeft' && currentPage > 1) {
+                    prevPage();
+                }
+            }
+        });
+
+        // Add loading animation for page transitions
+        function showPage(pageIndex) {
+            // Add fade out effect
+            const currentPageElement = document.querySelector('.page.active');
+            if (currentPageElement) {
+                currentPageElement.style.opacity = '0';
+                currentPageElement.style.transform = 'translateY(10px)';
+            }
+
+            setTimeout(() => {
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                    page.style.opacity = '';
+                    page.style.transform = '';
+                });
+                
+                const newPage = document.getElementById(pages[pageIndex]);
+                newPage.classList.add('active');
+                newPage.style.opacity = '0';
+                newPage.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    newPage.style.transition = 'all 0.5s ease';
+                    newPage.style.opacity = '1';
+                    newPage.style.transform = 'translateY(0)';
+                }, 50);
+                
+                currentPage = pageIndex;
+                updateProgress();
+
+                const nav = document.getElementById('pageNav');
+                if (pageIndex > 0 && pageIndex < pages.length - 1) {
+                    nav.style.display = 'flex';
+                } else {
+                    nav.style.display = 'none';
+                }
+
+                updateNavButtons();
+            }, 200);
+        }
+
+    </script>
+</body>
+</html>
